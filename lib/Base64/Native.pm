@@ -29,6 +29,9 @@ module Base64::Native {
 
     our proto sub base64-encode($, $?)  is export { * }
 
+    multi sub base64-encode(:$str! where .so --> Str) {
+	base64-encode(|c).decode;
+    } 
     multi sub base64-encode(Blob $in, Blob $out = enc-alloc($in) --> Blob) {
 	base64_encode($in, $in.bytes, $out, $out.bytes);
 	$out;
@@ -39,6 +42,9 @@ module Base64::Native {
 
     our proto sub base64-encode-uri($, $?)  is export { * }
 
+    multi sub base64-encode-uri(:$str! where .so --> Str) {
+	base64-encode-uri(|c).decode;
+    } 
     multi sub base64-encode-uri(Blob $in, Blob $out = enc-alloc($in)) {
 	base64_encode_uri($in, $in.bytes, $out, $out.bytes);
 	$out;
@@ -57,7 +63,7 @@ module Base64::Native {
     }
     multi sub base64-decode(Blob $in, Blob $out = dec-alloc($in) --> Blob) {
 	my int32 $n = base64_decode($in, $in.bytes, $out, $out.bytes);
-	die "unable to decode as base64. stopped at byte offset {-$n}: {$in[-$n - 1]}"
+	die "unable to decode as base64. stopped at byte {-$n}: 0x{$in[-$n - 1].base(16)} {$in[-$n - 1].chr.perl}"
 	    if $n < 0;
 	$out.reallocate($n)
 	    if $n <= $out.bytes;
