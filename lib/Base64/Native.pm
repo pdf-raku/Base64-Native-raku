@@ -29,11 +29,11 @@ module Base64::Native {
 
     our proto sub base64-encode($, $?)  is export { * }
 
-    multi sub base64-encode(Blob $in, Blob $out = enc-alloc($in)) {
+    multi sub base64-encode(Blob $in, Blob $out = enc-alloc($in) --> Blob) {
 	base64_encode($in, $in.bytes, $out, $out.bytes);
 	$out;
     }
-    multi sub base64-encode(Str $in, :$enc = 'utf8', |c) {
+    multi sub base64-encode(Str $in, :$enc = 'utf8', |c --> Blob) {
 	base64-encode($in.encode($enc), |c)
     }
 
@@ -44,12 +44,18 @@ module Base64::Native {
 	$out;
     }
     multi sub base64-encode-uri(Str $in, :$enc = 'utf8', |c) {
-	base64-encode-uri($in.encode-uri($enc), |c)
+	base64-encode-uri($in.encode($enc), |c)
     }
 
     our proto sub base64-decode($, $?)  is export { * }
 
-    multi sub base64-decode(Blob $in, Blob $out = dec-alloc($in)) {
+    multi sub base64-decode(Str :$enc!, |c --> Str) {
+	base64-decode(|c).decode($enc);
+    }
+    multi sub base64-decode(Str $in, :$enc = 'utf8', |c --> Blob) {
+	base64-decode($in.encode($enc), |c)
+    }
+    multi sub base64-decode(Blob $in, Blob $out = dec-alloc($in) --> Blob) {
 	my int32 $n = base64_decode($in, $in.bytes, $out, $out.bytes);
 	die "unable to decode as base64. stopped at byte offset {-$n}: {$in[-$n - 1]}"
 	    if $n < 0;
@@ -58,7 +64,4 @@ module Base64::Native {
 	$out;
     }
 
-    multi sub base64-decode(Str $in, |c) {
-	base64-decode($in.encode('latin-1'), |c)
-    }
 }

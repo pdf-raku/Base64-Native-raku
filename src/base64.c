@@ -9,7 +9,9 @@ static const char b64_enc_std[64] =
 static const char b64_enc_uri[64] =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 
-#define W 254  // Whitespace
+// --- Base-64 byte decoding table ---
+
+#define W 254 // Whitespace
 #define X 255 // Illegal Character
 
 static uint8_t b64_dec[256] = {
@@ -30,6 +32,8 @@ static uint8_t b64_dec[256] = {
     X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X, 
     X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X,  X
 };
+
+// --- Base-64 encoding ---
 
 static void
 base64_encode_blocks (const char *enc, uint8_t *in, size_t block_count, uint8_t *out) {
@@ -81,19 +85,22 @@ encode (const char *b64_enc_table,
 
 }
 
-void
+DLLEXPORT void
 base64_encode (uint8_t* in, size_t inlen,
 	       uint8_t* out, size_t outlen)
 {
   encode (b64_enc_std, in, inlen, out, outlen);
 }
 
-void
+DLLEXPORT void
 base64_encode_uri (uint8_t* in, size_t inlen,
 		   uint8_t* out, size_t outlen)
 {
   encode (b64_enc_uri, in, inlen, out, outlen);
 }
+
+// --- Base-64 decoding ---
+// Works with both URI and STD encoded data.
 
 static uint8_t next_digit(uint8_t* in,
 			  size_t inlen,
@@ -120,7 +127,7 @@ static uint8_t next_digit(uint8_t* in,
   return digit;
 }
 
-int32_t base64_decode(uint8_t* in,
+DLLEXPORT int32_t base64_decode(uint8_t* in,
 		      size_t inlen,
 		      uint8_t* out,
 		      size_t outlen) {
