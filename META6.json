@@ -6,7 +6,7 @@
   "tags"          : ["base64" ], 
   "version"       : "0.0.1",
   "auth"          : "github:p6-pdf",
-  "description"   : "Faster than average Base 64 encoding and decoding",
+  "description"   : "Fast Base 64 encoding and decoding (eager)",
   "source-url"    : "git://github.com/p6-pdf/Base64-Native-p6.git",
   "depends"       : [ "LibraryMake" ],
   "build-depends" : [ ],

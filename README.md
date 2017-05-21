@@ -1,8 +1,30 @@
 Base64-Native-p6
 ----------------
 
+Fast encoding and decoding routuines.
+
+ <a href="https://travis-ci.org/dwarring/Base64-Native-p6"><img src="https://travis-ci.org/dwarring/Base64-Native-p6.svg?branch=master"></a>
+ <a href="https://ci.appveyor.com/project/dwarring/Base64-Native-p6/branch/master"><img src="https://ci.appveyor.com/api/projects/status/github/dwarring/Base64-Native-p6?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true"></a>
+
+## Synopsis
+
 ```
 use Base64::Native;
 
-say base64-encode("I must go down to the seas again.", :str)
+## Encoding ##
+
+my buf8 $buf = base64-encode("Lorem ipsum");
+say $buf;
+# Buf[uint8]:0x<54 47 39 79 5a 57 30 67 61 58 42 7a 64 57 30 3d>
+say base64-encode("Lorem ipsum", :str);
+# TG9yZW0gaXBzdW0=
+
+## Decoding ##
+
+say base64-decode($buf);
+# Buf[uint8]:0x<4c 6f 72 65 6d 20 69 70 73 75 6d>
+say base64-decode("TG9yZW0gaXBzdW0=").decode;
+# "Lorem ipsum"
+
 ```
+
