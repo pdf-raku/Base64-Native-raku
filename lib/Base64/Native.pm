@@ -27,30 +27,19 @@ module Base64::Native {
 	buf8.allocate: out-blocks * 3;
     }
 
-    our proto sub base64-encode($, $?, :$enc, :$str)  is export { * }
+    our proto sub base64-encode($, $?, :$enc, :$str, :$uri)  is export { * }
 
     multi sub base64-encode(:$str! where .so, |c --> Str) {
 	base64-encode(|c).decode;
     } 
-    multi sub base64-encode(Blob $in, Blob $out = enc-alloc($in) --> Blob) {
-	base64_encode($in, $in.bytes, $out, $out.bytes);
+    multi sub base64-encode(Blob $in, Blob $out = enc-alloc($in), :$uri --> Blob) {
+	$uri
+	    ?? base64_encode_uri($in, $in.bytes, $out, $out.bytes)
+	    !! base64_encode($in, $in.bytes, $out, $out.bytes);
 	$out;
     }
     multi sub base64-encode(Str $in, :$enc = 'utf8', |c --> Blob) {
 	base64-encode($in.encode($enc), |c)
-    }
-
-    our proto sub base64-encode-uri($, $?, :$enc, :$str)  is export { * }
-
-    multi sub base64-encode-uri(:$str! where .so, |c --> Str) {
-	base64-encode-uri(|c).decode;
-    } 
-    multi sub base64-encode-uri(Blob $in, Blob $out = enc-alloc($in)) {
-	base64_encode_uri($in, $in.bytes, $out, $out.bytes);
-	$out;
-    }
-    multi sub base64-encode-uri(Str $in, :$enc = 'utf8', |c) {
-	base64-encode-uri($in.encode($enc), |c)
     }
 
     our proto sub base64-decode($, $?, :$enc)  is export { * }

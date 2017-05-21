@@ -45,6 +45,6 @@ my $all-std = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 my $all-uri = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 is base64-encode(base64-decode($all-std)).decode, $all-std, "charset roundtrip";
 is base64-encode(base64-decode($all-uri)).decode, $all-std, "charset roundtrip";
-is base64-encode-uri(base64-decode($all-uri)).decode, $all-uri, "charset roundtrip (uri)";
+is base64-encode(base64-decode($all-uri), :uri).decode, $all-uri, "charset roundtrip (uri)";
 
 done-testing;

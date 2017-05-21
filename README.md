@@ -1,10 +1,10 @@
 Base64-Native-p6
 ----------------
 
-Fast encoding and decoding routuines.
+Fast Base 64 encoding and decoding routines.
 
- <a href="https://travis-ci.org/dwarring/Base64-Native-p6"><img src="https://travis-ci.org/dwarring/Base64-Native-p6.svg?branch=master"></a>
- <a href="https://ci.appveyor.com/project/dwarring/Base64-Native-p6/branch/master"><img src="https://ci.appveyor.com/api/projects/status/github/dwarring/Base64-Native-p6?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true"></a>
+ <a href="https://travis-ci.org/p6-pdf/Base64-Native-p6"><img src="https://travis-ci.org/p6-pdf/Base64-Native-p6.svg?branch=master"></a>
+ <a href="https://ci.appveyor.com/project/p6-pdf/Base64-Native-p6/branch/master"><img src="https://ci.appveyor.com/api/projects/status/github/p6-pdf/Base64-Native-p6?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true"></a>
 
 ## Synopsis
 
@@ -28,3 +28,22 @@ say base64-decode("TG9yZW0gaXBzdW0=").decode;
 
 ```
 
+### URI Encoding
+
+By default, characters 63 and 64 are encoded to '+' and '/'. The `:uri` option
+maps these to '-' and '_'.
+```
+use Base64::Native;
+
+my $data = base64-decode("AB+/");
+say base64-encode( $data, :str );
+# AB+/
+say base64-encode( $data, :str, :uri );
+# AB+/
+```
+
+### URI Decoding
+
+URI and standard (MIME) mappings are both recognised.
+
+'+' and '-' are accepted for chacter 63; '/' and '_' are accepted for chaeacter 64.
