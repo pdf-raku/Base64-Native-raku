@@ -9,7 +9,7 @@
   "description"   : "Faster than average Base 64 encoding and decoding",
   "source-url"    : "git://github.com/p6-pdf/Base64-Native-p6.git",
   "depends"       : [ "LibraryMake" ],
-  "build-depends" : [ "Shell::Command" ],
+  "build-depends" : [ ],
   "test-depends"  : [ ],
   "provides"      : {
       "Base64::Native" : "lib/Base64/Native.pm"
