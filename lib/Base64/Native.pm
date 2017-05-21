@@ -51,7 +51,7 @@ module Base64::Native {
 
     multi sub base64-decode(Blob $in, Blob $out = dec-alloc($in)) {
 	my int32 $n = base64_decode($in, $in.bytes, $out, $out.bytes);
-	die "unable to decode as base64"
+	die "unable to decode as base64. stopped at byte offset {-$n}: {$in[-$n - 1]}"
 	    if $n < 0;
 	$out.reallocate($n)
 	    if $n <= $out.bytes;

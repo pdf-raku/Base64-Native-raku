@@ -32,7 +32,7 @@ static uint8_t b64_dec[256] = {
 };
 
 static void
-base64_encode_blocks (char *enc, uint8_t *in, size_t block_count, uint8_t *out) {
+base64_encode_blocks (const char *enc, uint8_t *in, size_t block_count, uint8_t *out) {
   for (;block_count > 0; block_count--, in += 3)
     {
       *out++ = enc[in[0] >> 2];
@@ -43,7 +43,7 @@ base64_encode_blocks (char *enc, uint8_t *in, size_t block_count, uint8_t *out) 
 }
 
 static void
-encode (char *b64_enc_table,
+encode (const char *b64_enc_table,
 	uint8_t* in, size_t inlen,
 	uint8_t* out, size_t outlen)
 {
@@ -99,18 +99,18 @@ static uint8_t next_digit(uint8_t* in,
 			  size_t inlen,
 			  size_t *i,
 			  uint8_t *n,
-			  uint8_t *error
+			  int32_t *error_pos
 			  ) {
   uint8_t digit = 0;
   if (*i < inlen) {
     digit = b64_dec[ in[ (*i)++ ] ];
     if (digit == W) {    // White-space
-      digit = next_digit(in, inlen, i, n, error);
+      digit = next_digit(in, inlen, i, n, error_pos);
     }
     else {
       if (digit == X) {  // Illegal character
-	*error = 1;
-	digit = next_digit(in, inlen, i, n, error);
+	*error_pos = *i;;
+	digit = next_digit(in, inlen, i, n, error_pos);
       }
       else {
 	(*n)++;
@@ -126,21 +126,21 @@ int32_t base64_decode(uint8_t* in,
 		      size_t outlen) {
     size_t i;
     int32_t j;
-    uint8_t error = 0;
+    int32_t error_pos = 0;
 
     while (inlen > 0 && in[inlen - 1] == '='
 	   || b64_dec[ in[inlen - 1] ] == W) {
       inlen--;
     }
 
-    for (i = 0, j = 0; i < inlen && j < outlen && !error;) {
+    for (i = 0, j = 0; i < inlen && j < outlen && !error_pos;) {
 
       uint8_t sextet[4] = {0, 0, 0, 0};
       uint32_t triple;
       uint8_t n_digits = 0;
       int8_t k, m;
       for (k = 0; k < 4; k++) {
-	sextet[k] = next_digit(in, inlen, &i, &n_digits, &error);
+	sextet[k] = next_digit(in, inlen, &i, &n_digits, &error_pos);
       }
 
       triple = (sextet[0] << 3 * 6)
@@ -154,5 +154,5 @@ int32_t base64_decode(uint8_t* in,
       }
     }
 
-    return error ? -1 : j;
+    return error_pos ? -error_pos : j;
 }
