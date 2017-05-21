@@ -127,10 +127,11 @@ static uint8_t next_digit(uint8_t* in,
   return digit;
 }
 
-DLLEXPORT int32_t base64_decode(uint8_t* in,
-		      size_t inlen,
-		      uint8_t* out,
-		      size_t outlen) {
+DLLEXPORT int32_t
+base64_decode (uint8_t* in,
+	       size_t inlen,
+	       uint8_t* out,
+	       size_t outlen) {
     size_t i;
     int32_t j;
     int32_t error_pos = 0;
