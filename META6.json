@@ -3,7 +3,7 @@
   "perl"          : "6.c",
   "license"       : "Artistic-2.0",
   "name"          : "Base64::Native",
-  "tags"          : ["base64" ], 
+  "tags"          : ["base64", "encode" ], 
   "version"       : "0.0.1",
   "auth"          : "github:p6-pdf",
   "description"   : "Fast Base 64 encoding and decoding (eager)",

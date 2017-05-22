@@ -44,6 +44,13 @@ say base64-encode( $data, :str, :uri );
 
 ### URI Decoding
 
-URI and standard (MIME) mappings are both recognised.
+URI and standard (MIME) mappings are both recognized by the `base64-decode` routine.
 
-'+' and '-' are accepted for chacter 63; '/' and '_' are accepted for chaeacter 64.
+```
+use Base64::Native;
+
+say base64-decode("AB+/");
+# Buf[uint8]:0x<00 1f bf>
+say base64-decode("AB-_");
+# Buf[uint8]:0x<00 1f bf>
+```
