@@ -13,7 +13,7 @@ DLLEXPORT void base64_encode (uint8_t* in, size_t inlen,
 DLLEXPORT void base64_encode_uri (uint8_t* in, size_t inlen,
 				  uint8_t* out, size_t outlen);
 
-DLLEXPORT int32_t base64_decode (uint8_t* in,
+DLLEXPORT ssize_t base64_decode (uint8_t* in,
 				 size_t inlen,
 				 uint8_t* out,
 				 size_t outlen);
