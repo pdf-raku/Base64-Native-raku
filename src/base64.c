@@ -127,7 +127,7 @@ static uint8_t next_digit(uint8_t* in,
     }
     else {
       if (digit == X) {  // Illegal character
-	*error_pos = *i;;
+	if (!*error_pos) *error_pos = *i;
 	digit = next_digit(in, inlen, i, n, error_pos);
       }
       else {
