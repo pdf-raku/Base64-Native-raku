@@ -7,7 +7,7 @@ use NativeCall;
 
 # Find our compiled library.
 sub libbase64 is export(:libbase64) {
-    state $ = do {
+    INIT {
 	my $so = get-vars('')<SO>;
 	~(%?RESOURCES{"lib/libbase64$so"});
     }
@@ -18,7 +18,7 @@ sub base64_encode_uri(Blob, size_t, Blob, size_t)  is native(&libbase64) { * }
 sub base64_decode(Blob, size_t, Blob, size_t --> ssize_t)  is native(&libbase64) { * }
 
 sub enc-alloc(Blob $in) {
-    my \out-blocks = ($in.bytes div 3) + ($in.bytes %% 3 ?? 0 !! 1);
+    my \out-blocks = ($in.bytes + 2) div 3;
     buf8.allocate: out-blocks * 4;
 }
 
