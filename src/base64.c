@@ -118,21 +118,22 @@ static uint8_t next_digit (uint8_t* in,
 			  ssize_t *error_pos
 			  ) {
   uint8_t digit = 0;
+
   if (*i < inlen) {
     digit = b64_dec[ in[ (*i)++ ] ];
-    if (digit == W) {    // White-space
-      digit = next_digit(in, inlen, i, n, error_pos);
-    }
-    else {
-      if (digit == X) {  // Illegal character
+
+    switch (digit) {
+      case X : // Illegal character
 	if (!*error_pos) *error_pos = *i;
-	digit = next_digit(in, inlen, i, n, error_pos);
-      }
-      else {
+      case W : // White-space
+        digit = next_digit(in, inlen, i, n, error_pos);
+        break;
+
+      default : // Valid digit
 	(*n)++;
-      }
     }
   }
+
   return digit;
 }
 
