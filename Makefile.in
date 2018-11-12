@@ -6,7 +6,7 @@ lib : resources/libraries/base64%SO%
 
 # work around for windows
 resources/libraries/base64%SO% : resources/libraries/libbase64%SO%
-	cp $< $@
+	cp resources/libraries/libbase64%SO% resources/libraries/base64%SO%
 
 resources/libraries/libbase64%SO% : $(SRC)/base64%O%
 	%LD% %LDSHARED% %LDFLAGS% %LDOUT%resources/libraries/libbase64%SO% $(SRC)/base64%O%
@@ -18,7 +18,7 @@ test : all
 	@prove -e"perl6 -I ." -v t
 
 clean :
-	@rm -f $(SRC)/*.o resources/libraries/libbase64%SO%
+	@rm -f $(SRC)/*.o resources/libraries/*base64%SO%
 
 realclean : clean
 	@rm -f Makefile
