@@ -1,21 +1,14 @@
 use v6;
 
-unit module Base64::Native;
+unit module Base64::Native:ver<0.0.2>;
 
-use LibraryMake;
 use NativeCall;
 
-# Find our compiled library.
-sub libbase64 is export(:libbase64) {
-    INIT {
-	my $so = get-vars('')<SO>;
-	~(%?RESOURCES{"lib/libbase64$so"});
-    }
-}
+constant BASE64-LIB = %?RESOURCES<libraries/base64>;
 
-sub base64_encode(Blob, size_t, Blob, size_t)  is native(&libbase64) { * }
-sub base64_encode_uri(Blob, size_t, Blob, size_t)  is native(&libbase64) { * }
-sub base64_decode(Blob, size_t, Blob, size_t --> ssize_t)  is native(&libbase64) { * }
+sub base64_encode(Blob, size_t, Blob, size_t) is native(BASE64-LIB) { * }
+sub base64_encode_uri(Blob, size_t, Blob, size_t)  is native(BASE64-LIB) { * }
+sub base64_decode(Blob, size_t, Blob, size_t --> ssize_t)  is native(BASE64-LIB) { * }
 
 sub enc-alloc(Blob $in) {
     my \out-blocks = ($in.bytes + 2) div 3;
