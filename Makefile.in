@@ -2,7 +2,11 @@ SRC=src
 
 all : lib
 
-lib : resources/libraries/libbase64%SO%
+lib : resources/libraries/base64%SO%
+
+# work around for windows
+resources/libraries/base64%SO% : resources/libraries/libbase64%SO%
+	cp $< $@
 
 resources/libraries/libbase64%SO% : $(SRC)/base64%O%
 	%LD% %LDSHARED% %LDFLAGS% %LDOUT%resources/libraries/libbase64%SO% $(SRC)/base64%O%
