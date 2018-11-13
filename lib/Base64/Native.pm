@@ -37,11 +37,11 @@ multi sub base64-encode(Blob $in, Blob $out = enc-alloc($in), :$uri --> Blob) is
 
 our proto sub base64-decode($, $?, :$enc)  is export { * }
 
-multi sub base64-decode(Str :$enc!, |c --> Str) {
-    base64-decode(|c).decode($enc);
-}
 multi sub base64-decode(Str $in, :$enc = 'utf8', |c --> Blob) {
     base64-decode($in.encode($enc), |c)
+}
+multi sub base64-decode(Str :$enc!, |c --> Str) {
+    base64-decode(|c).decode($enc);
 }
 multi sub base64-decode(Blob $in, Blob $out = dec-alloc($in) --> Blob) is default {
     my ssize_t $n = base64_decode($in, $in.bytes, $out, $out.bytes);
