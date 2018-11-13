@@ -144,6 +144,7 @@ base64_decode (uint8_t* in, size_t inlen,
     int32_t j;
     ssize_t error_pos = 0;
 
+    // Right trim padding and whitespace
     while (inlen > 0
            && (in[inlen - 1] == PADDING
                || b64_dec[ in[inlen - 1] ] == W)) {
@@ -152,7 +153,7 @@ base64_decode (uint8_t* in, size_t inlen,
 
     for (i = 0, j = 0; i < inlen && j < outlen && !error_pos;) {
 
-      uint8_t sextet[4] = {0, 0, 0, 0};
+      uint8_t sextet[4];
       uint32_t triple;
       uint8_t n_digits = 0;
       int8_t k, m;
@@ -167,7 +168,7 @@ base64_decode (uint8_t* in, size_t inlen,
 
       m = n_digits == 4 ? 0 : n_digits == 3 ? 1 : 2;
       for (k = 2; k >= m && j < outlen; k--) {
-	out[j++] = (triple >> k * 8) & 0xFF;
+	out[j++] = triple >> k * 8;
       }
     }
 
