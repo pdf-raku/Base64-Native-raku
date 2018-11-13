@@ -9,9 +9,9 @@ class Build {
     #| Sets up a C<Makefile> and runs C<make>.  C<$folder> should be
     #| C<"$folder/resources/libraries"> and C<$libname> should be the name of the library
     #| without any prefixes or extensions.
-    sub make(Str $folder, Str $destfolder, :$libname) {
+    sub make(Str $folder, Str $destfolder, IO() :$libname!) {
         my %vars = LibraryMake::get-vars($destfolder);
-
+        %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
         mkdir($destfolder);
         LibraryMake::process-makefile($folder, %vars);
         shell(%vars<MAKE>);
@@ -19,8 +19,9 @@ class Build {
 
     method build($workdir) {
         my $destdir = 'resources/libraries';
+        mkdir 'resources';
         mkdir $destdir;
-        make($workdir, "$destdir", :libname<base64>);
+        make($workdir, $destdir, :libname<base64>);
         True;
     }
 }

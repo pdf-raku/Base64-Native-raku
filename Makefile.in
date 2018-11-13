@@ -2,14 +2,10 @@ SRC=src
 
 all : lib
 
-lib : resources/libraries/base64%SO%
+lib : resources/libraries/%LIB_NAME%
 
-# work around for windows
-resources/libraries/base64%SO% : resources/libraries/libbase64%SO%
-	cp resources/libraries/libbase64%SO% resources/libraries/base64%SO%
-
-resources/libraries/libbase64%SO% : $(SRC)/base64%O%
-	%LD% %LDSHARED% %LDFLAGS% %LDOUT%resources/libraries/libbase64%SO% $(SRC)/base64%O%
+resources/libraries/%LIB_NAME% : $(SRC)/base64%O%
+	%LD% %LDSHARED% %LDFLAGS% %LDOUT%resources/libraries/%LIB_NAME% $(SRC)/base64%O%
 
 $(SRC)/base64%O% : $(SRC)/base64.c $(SRC)/base64.h
 	%CC% -I $(SRC) -c %CCSHARED% %CCFLAGS% %CCOUT%$(SRC)/base64%O% $(SRC)/base64.c
@@ -18,7 +14,7 @@ test : all
 	@prove -e"perl6 -I ." -v t
 
 clean :
-	@rm -f $(SRC)/*.o resources/libraries/*base64%SO%
+	@rm -f $(SRC)/*.o resources/libraries/%LIB_NAME%
 
 realclean : clean
 	@rm -f Makefile
