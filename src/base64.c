@@ -56,13 +56,14 @@ base64_encode_tail (const char *b64_enc_table,
                    uint8_t* out, size_t outlen
                    ) {
 
+  /* Skip over whole blocks */
   inlen -= whole_blocks * 3;
-  outlen -= whole_blocks * 4;
   in += whole_blocks * 3;
+  outlen -= whole_blocks * 4;
   out += whole_blocks * 4;
 
   if (inlen > 0 && outlen > 0) {
-    /* Final partial block */
+    /* Prepare final partial block */
     uint8_t in_tail[3] = {
       in[0],
       inlen > 1 ? in[1] : 0,
