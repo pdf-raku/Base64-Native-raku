@@ -155,11 +155,9 @@ base64_decode (uint8_t* in, size_t inlen,
 
     for (i = 0, j = 0; i < inlen && j < outlen && !error_pos;) {
 
-      uint32_t triple;
+      uint32_t triple = 0;
       uint8_t n_digits = 0;
       int8_t k, m;
-
-      triple = 0;
 
       for (k = 0; k < 4; k++) {
         triple <<= 6;
