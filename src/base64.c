@@ -155,18 +155,16 @@ base64_decode (uint8_t* in, size_t inlen,
 
     for (i = 0, j = 0; i < inlen && j < outlen && !error_pos;) {
 
-      uint8_t sextet[4];
       uint32_t triple;
       uint8_t n_digits = 0;
       int8_t k, m;
-      for (k = 0; k < 4; k++) {
-	sextet[k] = next_digit(in, inlen, &i, &n_digits, &error_pos);
-      }
 
-      triple = (sextet[0] << 3 * 6)
-        + (sextet[1] << 2 * 6)
-        + (sextet[2] << 1 * 6)
-        + (sextet[3] << 0 * 6);
+      triple = 0;
+
+      for (k = 0; k < 4; k++) {
+        triple <<= 6;
+	triple += next_digit(in, inlen, &i, &n_digits, &error_pos);
+      }
 
       m = n_digits == 4 ? 0 : n_digits == 3 ? 1 : 2;
       for (k = 2; k >= m && j < outlen; k--) {
