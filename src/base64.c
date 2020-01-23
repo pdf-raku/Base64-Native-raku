@@ -128,6 +128,7 @@ static uint8_t next_digit (uint8_t* in,
     switch (digit) {
       case X : // Illegal character
 	if (!*error_pos) *error_pos = *i;
+        /* FALLTHROUGH */
       case W : // White-space
         digit = next_digit(in, inlen, i, n_digits, error_pos);
         break;
@@ -144,7 +145,7 @@ DLLEXPORT ssize_t
 base64_decode (uint8_t* in, size_t inlen,
 	       uint8_t* out, size_t outlen) {
     size_t i;
-    int32_t j;
+    size_t j;
     ssize_t error_pos = 0;
 
     // Right trim padding and whitespace
@@ -171,5 +172,5 @@ base64_decode (uint8_t* in, size_t inlen,
       }
     }
 
-    return error_pos ? -error_pos : j;
+    return error_pos ? -error_pos : (ssize_t)j;
 }

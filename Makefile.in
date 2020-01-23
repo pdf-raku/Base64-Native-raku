@@ -2,6 +2,10 @@ SRC=src
 
 all : lib
 
+# 'all', with compilation warnings and debug symbols enabled
+debug :
+	%MAKE% "CF=-Wall -g"  all
+
 lib : resources/libraries/%LIB_NAME%
 
 resources/libraries/%LIB_NAME% : $(SRC)/base64%O%
