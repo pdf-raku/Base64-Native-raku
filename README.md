@@ -3,8 +3,8 @@ Base64-Native-p6
 
 Faster than average Base 64 encoding and decoding.
 
- <a href="https://travis-ci.org/p6-pdf/Base64-Native-p6"><img src="https://travis-ci.org/p6-pdf/Base64-Native-p6.svg?branch=master"></a>
- <a href="https://ci.appveyor.com/project/p6-pdf/Base64-Native-p6/branch/master"><img src="https://ci.appveyor.com/api/projects/status/github/p6-pdf/Base64-Native-p6?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true"></a>
+ <a href="https://travis-ci.org/pdf-raku/Base64-Native-raku"><img src="https://travis-ci.org/pdf-raku/Base64-Native-raku.svg?branch=master"></a>
+ <a href="https://ci.appveyor.com/project/p6-pdf/Base64-Native-raku/branch/master"><img src="https://ci.appveyor.com/api/projects/status/github/pdf-raku/Base64-Native-raku?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true"></a>
 
 ## Synopsis
 

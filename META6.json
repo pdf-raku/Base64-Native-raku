@@ -18,7 +18,7 @@
   "resources": [
     "libraries/base64"
   ],
-  "source-url": "git://github.com/p6-pdf/Base64-Native-p6.git",
+  "source-url": "git://github.com/pdf-raku/Base64-Native-raku.git",
   "tags": [
     "base64",
     "encode"
