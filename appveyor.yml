@@ -6,6 +6,7 @@ install:
   # Install rakudostar for faster CI builds.
   - choco install rakudostar
   - choco install make
+  - choco install mingw
   # Change to build folder
   - cd %APPVEYOR_BUILD_FOLDER%
   # Refresh environment variables so zef works
