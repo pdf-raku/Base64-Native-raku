@@ -12,6 +12,7 @@ class Build {
     sub make(Str $folder, Str $destfolder, IO() :$libname!) {
         my %vars = LibraryMake::get-vars($destfolder);
         %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
+        %vars<MAKE> = 'make' if Rakudo::Internals.IS-WIN; #issue #1
         mkdir($destfolder);
         LibraryMake::process-makefile($folder, %vars);
         shell(%vars<MAKE>);
