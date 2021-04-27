@@ -1,7 +1,7 @@
 language: perl6
 perl6:
   - latest
-  - '2017.08'
+  - '2020.05.1'
 os:
   - linux
   - osx
@@ -10,5 +10,5 @@ install:
   - zef --depsonly install .
   - zef build .
 script:
-  - prove -ve "perl6 -I."
+  - prove -ve "raku -I."
   - zef install .
