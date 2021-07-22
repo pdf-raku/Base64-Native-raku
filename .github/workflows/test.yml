@@ -25,14 +25,13 @@ jobs:
       - uses: Raku/setup-raku@v1
         with:
           raku-version: ${{ matrix.raku-version }}
+      - name: Platform specific setup
+      - if: contains(matrix.os, 'windows')
+        run: |
+          choco install make
+          choco install mingw
       - name: Install Dependencies
         run: |
-          if [ "$RUNNER_OS" == "windows" ]; then
-              choco install make
-              choco install mingw
-          else
-              echo "Not setup needed on $RUNNER_OS"
-          fi
           zef install --/test App::Prove6
           zef install --deps-only .
           zef build .
