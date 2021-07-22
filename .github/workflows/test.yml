@@ -30,6 +30,7 @@ jobs:
         run: |
           choco install make
           choco install mingw
+          refreshenv
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
