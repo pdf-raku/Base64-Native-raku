@@ -26,7 +26,7 @@ jobs:
         with:
           raku-version: ${{ matrix.raku-version }}
       - name: Platform specific setup
-      - if: contains(matrix.os, 'windows')
+        if: contains(matrix.os, 'windows')
         run: |
           choco install make
           choco install mingw
