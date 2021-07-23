@@ -27,10 +27,7 @@ jobs:
           raku-version: ${{ matrix.raku-version }}
       - name: Platform specific setup
         if: contains(matrix.os, 'windows')
-        run: |
-          choco install make
-          choco install mingw
-          refreshenv
+        uses: microsoft/setup-msbuild@v1.0.2
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
