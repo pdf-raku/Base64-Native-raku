@@ -14,12 +14,11 @@ class Build {
         %vars<LIB_BASE> = $libname;
         %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
         mkdir($destfolder);
-        LibraryMake::process-makefile($folder, %vars);
+	LibraryMake::process-makefile($folder, %vars);
         my $proc = shell(%vars<MAKE>);
 	if $proc.exitcode && Rakudo::Internals.IS-WIN {
 	    #issue #1
-	    note 'oops, lets try that again with gcc/gmake...';
-	    %vars<MAKE> = 'gmake';
+	    %vars<MAKE> = 'make';
 	    %vars<CC> = 'gcc';
 	    %vars<CCFLAGS> = '-fPIC -O3 -DNDEBUG --std=gnu99 -Wextra -Wall';
 	    %vars<LD> = 'gcc';
@@ -27,8 +26,13 @@ class Build {
 	    %vars<LDFLAGS> = '-fPIC -O3';
 	    %vars<CCOUT> = '-o ';
 	    %vars<LDOUT> = '-o ';
-	    LibraryMake::process-makefile($folder, %vars);
-	    shell(%vars<MAKE>);
+            for <make gmake> -> $maker {
+	        note "retrying build with gcc/{$maker}...";
+	        %vars<MAKE> = $maker;
+	        LibraryMake::process-makefile($folder, %vars);
+                $proc = shell(%vars<MAKE>);
+                last unless $proc.exitstatus;
+            }
 	}
     }
 
