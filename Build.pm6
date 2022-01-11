@@ -31,7 +31,7 @@ class Build {
 	        %vars<MAKE> = $maker;
 	        LibraryMake::process-makefile($folder, %vars);
                 $proc = shell(%vars<MAKE>);
-                last unless $proc.exitstatus;
+                last unless $proc.exitcode;
             }
 	}
     }
