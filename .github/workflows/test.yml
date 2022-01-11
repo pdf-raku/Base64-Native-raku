@@ -30,7 +30,6 @@ jobs:
         run: |
           choco install make
           choco install mingw
-          choco install vcbuildtools
           refreshenv
       - name: Install Dependencies
         run: |
