@@ -18,8 +18,8 @@ class Build {
         my $proc = shell(%vars<MAKE>);
 	if $proc.exitcode && Rakudo::Internals.IS-WIN {
 	    #issue #1
-	    note 'oops, lets try that again with gcc/make under mingw...';
-	    %vars<MAKE> = 'make';
+	    note 'oops, lets try that again with gcc/gmake...';
+	    %vars<MAKE> = 'gmake';
 	    %vars<CC> = 'gcc';
 	    %vars<CCFLAGS> = '-fPIC -O3 -DNDEBUG --std=gnu99 -Wextra -Wall';
 	    %vars<LD> = 'gcc';
