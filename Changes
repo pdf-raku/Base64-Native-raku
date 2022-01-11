@@ -2,5 +2,8 @@ Revision history for Base64-Native
 
 {{$NEXT}}
 
+0.0.5  2022-01-12T08:36:47+13:00
+    - Add Windows build fallback to gcc/make (mingw)
+
 0.0.4  2021-01-13T07:17:15+13:00
     - Initial CPAN upload
