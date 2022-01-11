@@ -13,10 +13,23 @@ class Build {
         my %vars = LibraryMake::get-vars($destfolder);
         %vars<LIB_BASE> = $libname;
         %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
-        %vars<MAKE> = 'make' if Rakudo::Internals.IS-WIN; #issue #1
         mkdir($destfolder);
         LibraryMake::process-makefile($folder, %vars);
-        shell(%vars<MAKE>);
+        my $proc = shell(%vars<MAKE>);
+	if $proc.exitcode && Rakudo::Internals.IS-WIN {
+	    #issue #1
+	    note 'oops, lets try that again with gcc/make under mingw...';
+	    %vars<MAKE> = 'make';
+	    %vars<CC> = 'gcc';
+	    %vars<CCFLAGS> = '-fPIC -O3 -DNDEBUG --std=gnu99 -Wextra -Wall';
+	    %vars<LD> = 'gcc';
+	    %vars<LDSHARED> = '-shared';
+	    %vars<LDFLAGS> = '-fPIC -O3';
+	    %vars<CCOUT> = '-o ';
+	    %vars<LDOUT> = '-o ';
+	    LibraryMake::process-makefile($folder, %vars);
+	    shell(%vars<MAKE>);
+	}
     }
 
     method build($workdir) {
