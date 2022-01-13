@@ -7,10 +7,10 @@ all : lib
 debug :
 	%MAKE% "CF=-Wall -g"  all
 
-lib : resources/libraries/%LIB_NAME%
+lib : %LIB_NAME%
 
-resources/libraries/%LIB_NAME% : $(SRC)%O%
-	%LD% %LDSHARED% %LDFLAGS% %LDOUT%resources/libraries/%LIB_NAME% $(SRC)%O%
+%LIB_NAME% : $(SRC)%O%
+	%LD% %LDSHARED% %LDFLAGS% %LDOUT%%LIB_NAME% $(SRC)%O%
 
 $(SRC)%O% : $(SRC).c $(SRC).h
 	%CC% -I $(DIR) -c %CCSHARED% %CCFLAGS% %CCOUT%$(SRC)%O% $(SRC).c
@@ -20,7 +20,7 @@ test : all
 
 clean :
 	@rm $(SRC)%O%
-	@rm resources/libraries/%LIB_NAME%
+	@rm %LIB_NAME%
 
 realclean : clean
 	@rm Makefile

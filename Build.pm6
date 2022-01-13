@@ -8,41 +8,33 @@ class Build {
     #| Sets up a C<Makefile> and runs C<make>.  C<$folder> should be
     #| C<"$folder/resources/libraries"> and C<$libname> should be the name of the library
     #| without any prefixes or extensions.
-    our sub make(Str $folder, Str $destfolder, IO() :$libname!) {
+    our sub make(Str $folder, Str $destfolder, IO() :$libname!, :$target!) {
         my %vars = LibraryMake::get-vars($destfolder);
         %vars<LIB_BASE> = $libname;
-        %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
+        %vars<LIB_NAME> = ~ $target;
         mkdir($destfolder);
 	LibraryMake::process-makefile($folder, %vars);
-        my $proc = shell(%vars<MAKE>);
-	if $proc.exitcode && Rakudo::Internals.IS-WIN {
-	    %vars<CC> = 'gcc';
-	    %vars<CCFLAGS> = '-fPIC -O3 -DNDEBUG --std=gnu99 -Wextra -Wall';
-	    %vars<LD> = 'gcc';
-	    %vars<LDSHARED> = '-shared';
-	    %vars<LDFLAGS> = '-fPIC -O3';
-	    %vars<CCOUT> = '-o ';
-	    %vars<LDOUT> = '-o ';
-            for <make gmake> -> $maker {
-	        note "retrying build with gcc/{$maker}...";
-	        %vars<MAKE> = $maker;
-	        LibraryMake::process-makefile($folder, %vars);
-                $proc = shell(%vars<MAKE>);
-                last unless $proc.exitcode;
-            }
-	}
+        shell(%vars<MAKE>);
     }
 
-    method build($workdir) {
+    method build($workdir, Bool :$make = ! $*DISTRO.is-win) {
         my $destdir = 'resources/libraries';
         mkdir 'resources';
         mkdir $destdir;
-        make($workdir, $destdir, :libname<base64>);
+	my $libname = 'base64';
+	my IO() $path = $destdir ~ '/' ~ $libname;
+        my $target = $*VM.platform-library-name($path);
+	if !$make && $target.IO.e {
+	    note "using prebuilt library: $target";
+	}
+	else {
+            make($workdir, $destdir, :libname<base64>, :$target);
+	}
         True;
     }
 }
 
 # Build.pm can also be run standalone
-sub MAIN(Str $working-directory = '.' ) {
-    Build.new.build($working-directory);
+sub MAIN(Str $working-directory = '.', Bool :$make = ! $*DISTRO.is-win ) {
+    Build.new.build($working-directory, :$make, :blah(42));
 }
