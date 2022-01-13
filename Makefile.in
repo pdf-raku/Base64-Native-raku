@@ -19,9 +19,10 @@ test : all
 	@prove6 -I . -v
 
 clean :
-	@rm -f $(SRC)*%O% resources/libraries/%LIB_NAME%
+	@rm $(SRC)%O%
+	@rm resources/libraries/%LIB_NAME%
 
 realclean : clean
-	@rm -f Makefile
+	@rm Makefile
 
 
