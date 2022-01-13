@@ -1,0 +1,41 @@
+name: windows-dll-build
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  raku:
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+        raku-version:
+          - '2021.12'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: Raku/setup-raku@v1
+        with:
+          raku-version: ${{ matrix.raku-version }}
+      - name: Platform specific setup
+        if: contains(matrix.os, 'windows')
+        run: |
+          choco install make
+          choco install mingw
+          refreshenv
+      - name: Build DLL
+        run: |
+          zef build .
+      - name: Run Tests
+        run: prove6 -I. t
+      - stefanzweifel/git-auto-commit-action@v4
+        with:
+            commit_message: Automated Windows DLL save
+            commit_user_name: David Warring
+            commit_user_email: david.warring@gmail.com
+            add_options: resources/libraries/*.dll

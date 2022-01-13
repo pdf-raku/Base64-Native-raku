@@ -5,11 +5,10 @@ use v6;
 class Build {
     need LibraryMake;
     # adapted from deprecated Native::Resources
-
     #| Sets up a C<Makefile> and runs C<make>.  C<$folder> should be
     #| C<"$folder/resources/libraries"> and C<$libname> should be the name of the library
     #| without any prefixes or extensions.
-    sub make(Str $folder, Str $destfolder, IO() :$libname!) {
+    our sub make(Str $folder, Str $destfolder, IO() :$libname!) {
         my %vars = LibraryMake::get-vars($destfolder);
         %vars<LIB_BASE> = $libname;
         %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
@@ -17,8 +16,6 @@ class Build {
 	LibraryMake::process-makefile($folder, %vars);
         my $proc = shell(%vars<MAKE>);
 	if $proc.exitcode && Rakudo::Internals.IS-WIN {
-	    #issue #1
-	    %vars<MAKE> = 'make';
 	    %vars<CC> = 'gcc';
 	    %vars<CCFLAGS> = '-fPIC -O3 -DNDEBUG --std=gnu99 -Wextra -Wall';
 	    %vars<LD> = 'gcc';
