@@ -8,5 +8,6 @@
 *.gcov
 *.gcda
 *.gcno
+*.obj
 Makefile
 blib/
