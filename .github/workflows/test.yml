@@ -35,9 +35,9 @@ jobs:
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
-          zef install --deps-only .
           zef --force install HTTP::UserAgent
           zef --force --verbose install HTTP::Status
+          zef install --deps-only .
           zef build .
       - name: Run Tests
         run: prove6 -I. t
