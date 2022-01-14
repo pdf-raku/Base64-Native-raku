@@ -1,3 +1,4 @@
+// ** Base64 encoding / decoding
 #include <stdio.h>
 #include <stddef.h>
 #include <stdint.h>
