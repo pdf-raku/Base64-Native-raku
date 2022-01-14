@@ -6,7 +6,7 @@
   "build-depends": [
   ],
   "depends": [
-    "LibraryMake"
+    "Native::Compile"
   ],
   "description": "Fast Base 64 encoding and decoding (eager)",
   "license": "Artistic-2.0",
