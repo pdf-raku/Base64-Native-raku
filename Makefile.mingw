@@ -1,7 +1,7 @@
 # used on github actions to build a DLL for distribution
 DIR=src
 SRC=$(DIR)/base64
-TGT=resources/libraries/libbase64.dll
+TGT=resources/libraries/base64.dll
 
 dll : $(TGT)
 

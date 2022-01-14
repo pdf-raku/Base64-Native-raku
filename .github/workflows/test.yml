@@ -43,8 +43,8 @@ jobs:
         run: prove6 -I. t
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-            commit_message: Automated Windows DLL save
-            commit_user_name: David Warring
-            commit_user_email: david.warring@gmail.com
-            file_pattern: resources/libraries/base64.dll
-            add_options: -f
+          commit_message: Automated Windows DLL save
+          commit_user_name: David Warring
+          commit_user_email: david.warring@gmail.com
+          file_pattern: resources/libraries/base64.dll
+          add_options: -f
