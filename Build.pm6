@@ -9,7 +9,7 @@ class Build {
         mkdir 'resources';
         mkdir $destdir;
 	my $libname = 'base64';
-	my IO() $path = $destdir ~ '/' ~ $libname;
+	my $path = ($destdir ~ '/' ~ $libname).IO;
         my $target = $*VM.platform-library-name($path);
 	if !$make && $target.IO.e {
 	    # to allow distribution of precompiled binaries
