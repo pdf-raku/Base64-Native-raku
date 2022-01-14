@@ -1,6 +1,8 @@
 Revision history for Base64-Native
 
 {{$NEXT}}
+    - Switch from Library::Make to Native::Compile. Avoid compilation
+      on Windows; use prebuilt DLL binary.
 
 0.0.6  2022-01-12T11:12:14+13:00
     - Further refined build fallback to try make, then gmake

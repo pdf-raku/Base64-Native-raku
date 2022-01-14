@@ -1,3 +1,4 @@
+// ** Base64 encoding / decoding
 #include <stdio.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -72,7 +73,7 @@ base64_encode_tail (const char *b64_enc_table,
     uint8_t out_tail[4];
     uint8_t i;
 
-    base64_encode_blocks (b64_enc_std, in_tail, 1, out_tail);
+    base64_encode_blocks (b64_enc_table, in_tail, 1, out_tail);
     /* Pad */
     if (inlen < 2) {
       out_tail[2] = PADDING;

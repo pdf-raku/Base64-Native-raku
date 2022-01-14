@@ -14,11 +14,11 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macOS-latest
+          ##- macOS-latest
           - windows-latest
         raku-version:
           - 'latest'
-          - '2020.05.1'
+          ##- '2021.08'
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -31,11 +31,18 @@ jobs:
           choco install make
           choco install mingw
           refreshenv
+          make -f Makefile.mingw dll # build distribution dll
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
-          zef install --/test LibraryMake
           zef install --deps-only .
           zef build .
       - name: Run Tests
         run: prove6 -I. t
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automated Windows DLL save
+          commit_user_name: David Warring
+          commit_user_email: david.warring@gmail.com
+          file_pattern: resources/libraries/base64.dll
+          add_options: -f
