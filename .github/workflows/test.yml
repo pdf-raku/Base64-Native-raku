@@ -38,7 +38,7 @@ jobs:
           choco install make
           choco install mingw
           refreshenv
-	  make -f Makefile.mingw dll # build distribution dll
+          make -f Makefile.mingw dll # build distribution dll
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
