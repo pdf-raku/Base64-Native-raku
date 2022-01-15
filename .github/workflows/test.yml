@@ -21,7 +21,7 @@ jobs:
         run: |
           make -f Makefile.mingw dll # build distribution dll
       - name: Check-in DLL
-      - uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Windows DLL save
           commit_user_name: David Warring
