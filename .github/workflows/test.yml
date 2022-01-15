@@ -13,18 +13,18 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Setup
-	run: |
-	  choco install make
-	  choco install mingw
-	  refreshenv
+        run: |
+          choco install make
+          choco install mingw
+          refreshenv
       - name: Rebuild DLL
-	run: |
-	  make -f Makefile.mingw dll # build distribution dll
+        run: |
+          make -f Makefile.mingw dll # build distribution dll
       - name: Check-in DLL
       - uses: stefanzweifel/git-auto-commit-action@v4
-	with:
-	  commit_message: Automated Windows DLL save
-	  commit_user_name: David Warring
-	  commit_user_email: david.warring@gmail.com
-	  file_pattern: resources/libraries/base64.dll
-	  add_options: -f
+        with:
+          commit_message: Automated Windows DLL save
+          commit_user_name: David Warring
+          commit_user_email: david.warring@gmail.com
+          file_pattern: resources/libraries/base64.dll
+          add_options: -f
