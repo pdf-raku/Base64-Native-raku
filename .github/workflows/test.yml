@@ -45,8 +45,6 @@ jobs:
       - uses: Raku/setup-raku@v1
         with:
           raku-version: ${{ matrix.raku-version }}
-      - name: Platform specific setup
-        if: contains(matrix.os, 'windows')
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
