@@ -9,7 +9,27 @@ on:
   pull_request:
 
 jobs:
+  build-libraries:
+    runs-on: windows-latest
+    steps:
+    - name: Setup
+      run: |
+        choco install make
+        choco install mingw
+        refreshenv
+    - name: Rebuild DLL
+      run: |
+        make -f Makefile.mingw dll # build distribution dll
+    - name: Check-in DLL
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Automated Windows DLL save
+        commit_user_name: David Warring
+        commit_user_email: david.warring@gmail.com
+        file_pattern: resources/libraries/base64.dll
+        add_options: -f
   raku:
+    needs: build-libraries
     strategy:
       matrix:
         os:
@@ -27,11 +47,6 @@ jobs:
           raku-version: ${{ matrix.raku-version }}
       - name: Platform specific setup
         if: contains(matrix.os, 'windows')
-        run: |
-          choco install make
-          choco install mingw
-          refreshenv
-          make -f Makefile.mingw dll # build distribution dll
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
@@ -39,10 +54,3 @@ jobs:
           zef build .
       - name: Run Tests
         run: prove6 -I. t
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Automated Windows DLL save
-          commit_user_name: David Warring
-          commit_user_email: david.warring@gmail.com
-          file_pattern: resources/libraries/base64.dll
-          add_options: -f
