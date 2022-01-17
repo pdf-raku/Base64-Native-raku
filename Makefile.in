@@ -1,0 +1,28 @@
+DIR=src
+SRC=$(DIR)/%LIB_BASE%
+TGT=resources/libraries/%LIB_NAME%
+
+all : lib
+
+# 'all', with compilation warnings and debug symbols enabled
+debug :
+	%MAKE% "CF=-Wall -g"  all
+
+lib : $(TGT)
+
+$(TGT) : $(SRC)%O%
+	%LD% %LDSHARED% %LDFLAGS% %LDOUT%$(TGT) $(SRC)%O%
+
+$(SRC)%O% : $(SRC).c $(SRC).h
+	%CC% -I $(DIR) -c %CCSHARED% %CCFLAGS% %CCOUT%$(SRC)%O% $(SRC).c
+
+test : all
+	@prove6 -I . -v
+
+clean :
+	@rm -f $(SRC)*%O% $(TGT)
+
+realclean : clean
+	@rm -f Makefile
+
+
