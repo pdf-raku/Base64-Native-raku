@@ -10,25 +10,27 @@ class Build {
     #| C<"$folder/resources/libraries"> and C<$libname> should be the name of the library
     #| without any prefixes or extensions.
     sub make(Str $folder, Str $destfolder, IO() :$libname!) {
-        my %vars = LibraryMake::get-vars($destfolder);
-        %vars<LIB_BASE> = $libname;
-        %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
-        %vars<MAKE> = 'make' if 
-        mkdir($destfolder);
-        LibraryMake::process-makefile($folder, %vars);
-        shell(%vars<MAKE>);
+        if Rakudo::Internals.IS-WIN {
+            # choco install make mingw
+            "Makefile".IO.spurt: "build/makefile-windows".IO.slurp;
+            shell("make dll");
+        }
+        else {
+            my %vars = LibraryMake::get-vars($destfolder);
+            %vars<LIB_BASE> = $libname;
+            %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
+            mkdir($destfolder);
+            LibraryMake::process-makefile($folder, %vars);
+            shell(%vars<MAKE>);
+        }
     }
 
     method build($workdir) {
-        if Rakudo::Internals.IS-WIN {
-            note "using prebuilt library on Windows";
-        }
-        else {
-            my $destdir = 'resources/libraries';
-            mkdir 'resources';
-            mkdir $destdir;
-            make($workdir, $destdir, :libname<base64>);
-        }
+
+        my $destdir = 'resources/libraries';
+        mkdir 'resources';
+        mkdir $destdir;
+        make($workdir, $destdir, :libname<base64>);
         True;
     }
 }
