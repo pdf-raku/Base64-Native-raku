@@ -18,7 +18,7 @@ jobs:
           choco install make
           choco install mingw
           refreshenv
-      - name: Rebuild DLL
+      - name: Update DLL
         run: |
           make -f build\makefile-windows dll # build distribution dll
       - uses: stefanzweifel/git-auto-commit-action@v4
