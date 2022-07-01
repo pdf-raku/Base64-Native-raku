@@ -2,6 +2,9 @@ Revision history for Base64-Native
 
 {{$NEXT}}
 
+0.0.8  2022-07-02T07:18:51+12:00
+    - Upload to zef ecosystem
+
 0.0.7  2022-01-19T13:09:28+13:00
     - Setup Windows build-farm in github actions. Use prebuilt DLL binaries
 
