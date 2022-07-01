@@ -28,7 +28,7 @@ multi sub base64-encode(Str $in, :$enc = 'utf8', |c) {
 multi sub base64-encode(:$str! where .so, |c --> Str) {
     base64-encode(|c).decode;
 }
-multi sub base64-encode(Blob $in, Blob $out = encode-alloc($in), :$uri --> Blob) is default {
+multi sub base64-encode(Blob $in, Blob $out = encode-alloc($in), :$uri --> Blob) {
     $uri
         ?? base64_encode_uri($in, $in.bytes, $out, $out.bytes)
         !! base64_encode($in, $in.bytes, $out, $out.bytes);
@@ -40,9 +40,9 @@ our proto sub base64-decode($, $?)  is export { * }
 multi sub base64-decode(Str $in, |c --> Blob) {
     base64-decode($in.encode('latin-1'), |c)
 }
-multi sub base64-decode(Blob $in, Blob $out = decode-alloc($in) --> Blob) is default {
+multi sub base64-decode(Blob $in, Blob $out = decode-alloc($in) --> Blob) {
     my ssize_t $n = base64_decode($in, $in.bytes, $out, $out.bytes);
-    die "unable to decode as base64. stopped at byte {-$n}: 0x{$in[-$n - 1].base(16)} {$in[-$n - 1].chr.perl}"
+    die "unable to decode as base64. stopped at byte {-$n}: 0x{$in[-$n - 1].base(16)} {$in[-$n - 1].chr.raku}"
         if $n < 0;
     $out.reallocate($n)
         if $n <= $out.bytes;
