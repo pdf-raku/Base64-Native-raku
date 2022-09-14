@@ -45,7 +45,7 @@ jobs:
           raku-version: ${{ matrix.raku-version }}
       - name: Windows specific setup
         if: matrix.os == 'windows-latest'
-        run; zef install --force LibraryMake
+        run: zef install --force LibraryMake
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
