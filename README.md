@@ -1,10 +1,9 @@
-Base64-Native-p6
+Base64-Native-raku
 ----------------
 
 Faster than average Base 64 encoding and decoding.
 
 [![Actions Status](https://github.com/pdf-raku/Base64-Native-raku/workflows/test/badge.svg)](https://github.com/pdf-raku/Base64-Native-raku/actions)
-<a href="https://ci.appveyor.com/project/dwarring/Base64-Native-raku"><img src="https://ci.appveyor.com/api/projects/status/github/raku-pdf/Base64-Native-raku?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true"></a>
 
 ## Synopsis
 
@@ -30,7 +29,7 @@ say base64-decode("TG9yZW0gaXBzdW0=").decode;
 
 ### URI Encoding
 
-By default, codes 63 and 64 are encoded to '+' and '/'. The `:uri` option
+By default, codes 62 and 63 are encoded to '+' and '/'. The `:uri` option
 maps these to '-' and '_'.
 ```
 use Base64::Native;
