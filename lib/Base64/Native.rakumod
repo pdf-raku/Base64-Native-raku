@@ -45,6 +45,6 @@ multi sub base64-decode(Blob $in, Blob $out = decode-alloc($in) --> Blob) {
     die "unable to decode as base64. stopped at byte {-$n}: 0x{$in[-$n - 1].base(16)} {$in[-$n - 1].chr.raku}"
         if $n < 0;
     $out.reallocate($n)
-        if $n <= $out.bytes;
+        if $n < $out.bytes;
     $out;
 }
