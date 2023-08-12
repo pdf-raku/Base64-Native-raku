@@ -31,8 +31,8 @@ jobs:
     strategy:
       matrix:
         os:
-          #- ubuntu-latest
-          #- macOS-latest
+          - ubuntu-latest
+          - macOS-latest
           - windows-latest
         raku-version:
           - 'latest'
