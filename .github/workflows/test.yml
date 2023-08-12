@@ -18,7 +18,7 @@ jobs:
         run: |
           choco install make
           #choco install mingw
-          refreshenv
+          #refreshenv
       - name: Update DLL
         run: |
           make -f build\makefile-windows dll # build distribution dll
