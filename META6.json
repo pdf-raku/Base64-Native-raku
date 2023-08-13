@@ -6,7 +6,14 @@
   "build-depends": [
   ],
   "depends": [
-    "LibraryMake"
+      {
+          "name": {
+              "by-distro.name": {
+                  "mswin32": "",
+                  "": "LibraryMake"
+              }
+          }
+      }
   ],
   "description": "Fast Base 64 encoding and decoding (eager)",
   "license": "Artistic-2.0",
