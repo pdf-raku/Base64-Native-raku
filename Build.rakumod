@@ -36,7 +36,7 @@ class Build {
     }
 }
 
-# Build.pm can also be run standalone
+# Build.rakumod can also be run standalone
 sub MAIN(Str $working-directory = '.' ) {
     Build.new.build($working-directory);
 }
