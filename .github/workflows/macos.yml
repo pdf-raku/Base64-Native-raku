@@ -1,4 +1,4 @@
-name: test
+name: MacOS
 
 on:
   push:
@@ -10,7 +10,6 @@ on:
 
 jobs:
   raku:
-    needs: build-libraries
     strategy:
       matrix:
         os:
