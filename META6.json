@@ -24,6 +24,8 @@
     "encode"
   ],
   "test-depends": [
+    "JSON::Fast",
+    "App::Prove6"
   ],
   "version": "0.0.8"
 }
