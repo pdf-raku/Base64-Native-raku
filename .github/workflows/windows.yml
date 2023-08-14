@@ -1,4 +1,4 @@
-name: test
+name: Win64
 
 on:
   push:
@@ -17,8 +17,8 @@ jobs:
       - name: Setup
         run: |
           choco install make
-          choco install mingw
-          refreshenv
+          #choco install mingw
+          #refreshenv
       - name: Update DLL
         run: |
           make -f build\makefile-windows dll # build distribution dll
@@ -31,12 +31,9 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-latest
-          - macOS-latest
           - windows-latest
         raku-version:
           - 'latest'
-          - '2021.08'
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -48,8 +45,7 @@ jobs:
         run: zef install --force LibraryMake
       - name: Install Dependencies
         run: |
-          zef install --/test App::Prove6
           zef install --deps-only .
           zef build .
       - name: Run Tests
-        run: prove6 -I. t
+        run: prove -e'raku -I.' t
