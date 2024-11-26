@@ -11,5 +11,5 @@ unless Lib.IO.s {
 }
 
 for qw<base64_encode base64_encode_uri base64_decode> -> $sym {
-    lives-ok({ cglobal(Lib, $sym, Pointer) }, "$sym is present in {Lib.basename}");
+    lives-ok({ cglobal(Lib, $sym, Pointer) }, "$sym is present in {Lib.IO.basename}");
 }
