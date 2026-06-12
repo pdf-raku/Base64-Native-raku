@@ -1,6 +1,6 @@
 use v6;
 
-unit module Base64::Native:ver<0.0.9>;
+unit module Base64::Native:ver<0.0.10>;
 
 use NativeCall;
 

@@ -3,13 +3,13 @@
 use v6;
 
 class Build {
-    need LibraryMake;
     # adapted from deprecated Native::Resources
 
     #| Sets up a C<Makefile> and runs C<make>.  C<$folder> should be
     #| C<"$folder/resources/libraries"> and C<$libname> should be the name of the library
     #| without any prefixes or extensions.
     sub make(Str $folder, Str $destfolder, IO() :$libname!) {
+        require LibraryMake;
         my %vars = LibraryMake::get-vars($destfolder);
         %vars<LIB_BASE> = $libname;
         %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);

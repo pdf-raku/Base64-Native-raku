@@ -3,6 +3,8 @@
   "authors": [
     "David Warring"
   ],
+  "build-depends": [
+  ],
   "depends": {
     "build": {
       "requires": [
@@ -17,9 +19,9 @@
         }
       ]
     },
-    "test": { 
+    "test": {
       "requires": [
-          "App::Prove6"
+        "App::Prove6"
       ]
     }
   },
@@ -37,6 +39,8 @@
   "tags": [
     "base64",
     "encode"
+  ],
+  "test-depends": [
   ],
   "version": "0.0.10"
 }
