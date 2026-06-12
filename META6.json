@@ -3,11 +3,27 @@
   "authors": [
     "David Warring"
   ],
-  "build-depends": [
-  ],
-  "depends": [
-    "LibraryMake"
-  ],
+  "depends": {
+    "build": {
+      "requires": [
+        {
+          "by-distro.name": {
+            "": [
+              "LibraryMake"
+            ],
+            "mswin32": [
+            ]
+          }
+        }
+      ]
+    },
+    "test": { 
+      "requires": [
+          "JSON::Fast",
+          "App::Prove6"
+      ]
+    }
+  },
   "description": "Fast Base 64 encoding and decoding (eager)",
   "license": "Artistic-2.0",
   "name": "Base64::Native",
@@ -18,14 +34,10 @@
   "resources": [
     "libraries/base64"
   ],
-  "source-url": "git://github.com/pdf-raku/Base64-Native-raku.git",
+  "source-url": "https://github.com/pdf-raku/Base64-Native-raku.git",
   "tags": [
     "base64",
     "encode"
   ],
-  "test-depends": [
-    "JSON::Fast",
-    "App::Prove6"
-  ],
-  "version": "0.0.9"
+  "version": "0.0.10"
 }
