@@ -19,7 +19,6 @@
     },
     "test": { 
       "requires": [
-          "JSON::Fast",
           "App::Prove6"
       ]
     }
