@@ -119,7 +119,7 @@ static uint8_t next_digit (uint8_t* in,
 			  size_t inlen,
 			  size_t *i,
 			  uint8_t *n_digits,
-			  ssize_t *error_pos
+			  size_t *error_pos
 			  ) {
   uint8_t digit = 0;
 
@@ -147,7 +147,7 @@ base64_decode (uint8_t* in, size_t inlen,
 	       uint8_t* out, size_t outlen) {
     size_t i;
     size_t j;
-    ssize_t error_pos = 0;
+    size_t error_pos = 0;
 
     // Right trim padding and whitespace
     while (inlen > 0
@@ -173,5 +173,5 @@ base64_decode (uint8_t* in, size_t inlen,
       }
     }
 
-    return error_pos ? -error_pos : (ssize_t)j;
+    return (ssize_t) (error_pos ? -error_pos : j);
 }
