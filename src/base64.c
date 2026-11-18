@@ -9,8 +9,8 @@
 #define B64_ENC_COMMON "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 #define B64_ENC_STD B64_ENC_COMMON "+/"
 #define B64_ENC_URI B64_ENC_COMMON "-_"
-static const char b64_enc_std[64] = B64_ENC_STD;
-static const char b64_enc_uri[64] = B64_ENC_URI;
+static const char b64_enc_std[65] = B64_ENC_STD;
+static const char b64_enc_uri[65] = B64_ENC_URI;
 
 // --- Base-64 byte decoding table ---
 
