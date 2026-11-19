@@ -2,6 +2,9 @@ Revision history for Base64-Native
 
 {{$NEXT}}
 
+0.0.11  2026-11-19T14:25:15+13:00
+    - Fix unterminated-string GCC warning
+
 0.0.10  2026-06-13T06:34:18+12:00
     - Make LibraryMake an optional dependency on Windows
     - Add t/00sanity.t; Test library has been built
